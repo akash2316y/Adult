@@ -32,15 +32,33 @@ async def get_updated_limits():
 @Client.on_message(filters.command("start") & filters.private)
 async def start_command(client, message):
     if await udb.is_user_banned(message.from_user.id):
-        await message.reply("**🚫 You are banned from using this bot**",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Support 🧑‍💻", url=f"https://t.me/{ADMIN_USERNAME}")]]))
+        await message.reply(
+            "**🚫 You are banned from using this bot**",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Support 🧑‍💻", url=f"https://t.me/{ADMIN_USERNAME}")]
+            ])
+        )
         return
-    if IS_FSUB and not await get_fsub(client, message):return
+
+    if IS_FSUB and not await get_fsub(client, message):
+        return
+
     if await udb.get_user(message.from_user.id) is None:
         await udb.addUser(message.from_user.id, message.from_user.first_name)
-        await client.send_message(LOG_CHNL,text=f"**🆕 #NEW_USER\n👤 User: {message.from_user.mention()}\n🆔 ID: `{message.from_user.id}`**")
+        await client.send_message(
+            LOG_CHNL,
+            text=f"**🆕 #NEW_USER\n👤 User: {message.from_user.mention()}\n🆔 ID: `{message.from_user.id}`**"
+        )
+
     full_name = message.from_user.first_name + (" " + message.from_user.last_name if message.from_user.last_name else "")
     h = datetime.now(pytz.timezone('Asia/Kolkata')).hour
-    wish = "Good Morning" if 4 <= h < 12 else "Good Afternoon" if 12 <= h < 17 else "Good Evening" if 17 <= h < 20 else "Good Night"
+    wish = (
+        "Good Morning" if 4 <= h < 12 else
+        "Good Afternoon" if 12 <= h < 17 else
+        "Good Evening" if 17 <= h < 20 else
+        "Good Night"
+    )
+
     msg = f"""<b>👋 {full_name}, {wish}
 
 <blockquote expandable>This bot may contain 18+ content.
@@ -48,14 +66,18 @@ Please access it at your own risk.
 The material may include explicit or graphic content that is not suitable for minors.</blockquote>
 
 <a href="https://telegra.ph/Terms--Conditions-and-Privacy-Policy-07-01">Terms and Conditions</a></b>"""
-    await message.reply_text(msg,
-                             reply_markup = InlineKeyboardMarkup(
-                                 [[InlineKeyboardButton("Buy Subscription", callback_data="pro")],
-                                  [InlineKeyboardButton("Help", callback_data="help"),InlineKeyboardButton("About", callback_data="about")],[InlineKeyboardButton("Close", callback_data="close")]]),
-                                  disable_web_page_preview=True,
-                                  parse_mode=ParseMode.HTML,
-                                  message_effect_id=5104841245755180586)
 
+    await message.reply_text(
+        msg,
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("Buy Subscription", callback_data="pro")],
+            [InlineKeyboardButton("Help", callback_data="help"), InlineKeyboardButton("About", callback_data="about")],
+            [InlineKeyboardButton("Close", callback_data="close")]
+        ]),
+        disable_web_page_preview=True,
+        parse_mode=ParseMode.HTML
+    )
+        
 @Client.on_message(filters.command("getvideos") & filters.private)
 async def send_random_video(client: Client, message: Message):
     if await udb.is_user_banned(message.from_user.id):
@@ -120,4 +142,5 @@ If you wish to upgrade, simply choose your preferred plan from the options below
             InlineKeyboardButton('Close', callback_data='close')]
         ]),
         disable_web_page_preview=True,
+
          parse_mode=ParseMode.HTML)
