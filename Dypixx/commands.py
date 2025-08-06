@@ -64,7 +64,7 @@ The material may include explicit or graphic content that is not suitable for mi
         parse_mode=ParseMode.HTML
     )
         
-@Client.on_message(filters.command("getvideos") & filters.private)
+@Client.on_message(filters.command("getvideo") & filters.private)
 async def send_random_video(client: Client, message: Message):
     if await udb.is_user_banned(message.from_user.id):
         await message.reply("**🚫 You are banned from using this bot**",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Support 🧑‍💻", url=f"https://t.me/{ADMIN_USERNAME}")]]))
@@ -130,4 +130,5 @@ If you wish to upgrade, simply choose your preferred plan from the options below
         disable_web_page_preview=True,
 
          parse_mode=ParseMode.HTML)
+
 
