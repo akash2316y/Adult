@@ -1,17 +1,3 @@
-'''
-Smile, please... 😊
-Goodbye forever.
-
-Thank you all for your care and support throughout this journey.
-
-Unfortunately, my @dypixx account has been hacked. The hacker is now using it to promote unknown content. Please be cautious, stay alert, and don’t fall for anything they post.
-
-Take care, stay safe — and once again, thank you for everything.
-Goodbye.
-
-— Dypixx
-'''
-
 from pyrogram import Client, filters
 from pyrogram.types import *
 from vars import *
@@ -144,3 +130,4 @@ If you wish to upgrade, simply choose your preferred plan from the options below
         disable_web_page_preview=True,
 
          parse_mode=ParseMode.HTML)
+
